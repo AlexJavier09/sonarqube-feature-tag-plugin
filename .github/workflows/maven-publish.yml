@@ -3,7 +3,7 @@ name: Build SonarQube Plugin
 on:
   push:
     branches:
-      - main
+      - 
   pull_request:
 
 jobs:
@@ -21,6 +21,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Build with Maven
+      working-directory: sonarqube-feature-tag-plugin
       run: mvn clean package
 
     - name: Upload JAR artifact
