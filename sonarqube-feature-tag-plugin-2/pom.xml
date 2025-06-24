@@ -10,7 +10,7 @@
   <packaging>jar</packaging>
 
   <name>SonarQube Feature Tag Plugin</name>
-  <description>Plugin para validar tags @smokeTest y @regressionTest en archivos .feature</description>
+  <description>Plugin para validar tags @smokeTest y @regressionTest en archivos .feature sin dependencia gherkin</description>
 
   <properties>
     <sonar.version>8.9.0.43852</sonar.version>
@@ -25,12 +25,6 @@
       <artifactId>sonar-plugin-api</artifactId>
       <version>${sonar.version}</version>
       <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>io.cucumber</groupId>
-      <artifactId>gherkin</artifactId>
-      <version>26.0.0</version>
     </dependency>
   </dependencies>
 
