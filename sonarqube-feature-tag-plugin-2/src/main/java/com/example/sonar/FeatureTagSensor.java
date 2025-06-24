@@ -59,11 +59,12 @@ public void execute(SensorContext context) {
 
         if (!foundTagInFile) {
             NewIssue newIssue = context.newIssue().forRule(ruleKey);
-            NewIssueLocation location = context.newIssueLocation()
-                    .on(featureFile)
-                    .at(featureFile.selectLine(1))
-                    .message("El archivo debe contener al menos un Scenario o Scenario Outline con tag @smokeTest o @regressionTest correctamente escritos.");
-            newIssue.at(location).save();
+NewIssueLocation location = newIssue.newLocation()
+        .on(featureFile)
+        .at(featureFile.selectLine(1))
+        .message("El archivo debe contener al menos un Scenario o Scenario Outline con tag @smokeTest o @regressionTest correctamente escritos.");
+newIssue.at(location);
+newIssue.save();
         }
     }
 }
