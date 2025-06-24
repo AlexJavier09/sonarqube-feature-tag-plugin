@@ -25,46 +25,46 @@ public class FeatureTagSensor implements Sensor {
         descriptor.name("Feature Tag Validator Sensor");
     }
 
-    @Override
-    public void execute(SensorContext context) {
-        RuleKey ruleKey = RuleKey.of(FeatureTagRulesDefinition.REPOSITORY_KEY, FeatureTagRulesDefinition.RULE_KEY);
+@Override
+public void execute(SensorContext context) {
+    RuleKey ruleKey = RuleKey.of(FeatureTagRulesDefinition.REPOSITORY_KEY, FeatureTagRulesDefinition.RULE_KEY);
 
-        Iterable<InputFile> featureFiles = fileSystem.inputFiles(file -> file.filename().endsWith(".feature") && file.type() == Type.MAIN);
+    Iterable<InputFile> featureFiles = fileSystem.inputFiles(file -> file.filename().endsWith(".feature") && file.type() == Type.MAIN);
 
-        for (InputFile featureFile : featureFiles) {
-            List<String> lines = featureFile.lines();
+    for (InputFile featureFile : featureFiles) {
+        String content = featureFile.contents();
+        List<String> lines = java.util.Arrays.asList(content.split("\\r?\\n"));
 
-            boolean foundTagInFile = false;
-            boolean scenarioHasTag = false;
+        boolean foundTagInFile = false;
+        boolean scenarioHasTag = false;
 
-            for (String lineRaw : lines) {
-                String line = lineRaw.trim();
+        for (String lineRaw : lines) {
+            String line = lineRaw.trim();
 
-                if (line.startsWith("@")) {
-                    if (line.toLowerCase().contains("@smoketest") || line.toLowerCase().contains("@regressiontest")) {
-                        scenarioHasTag = true;
-                    }
-                } else if (line.startsWith("Scenario") || line.startsWith("Scenario Outline")) {
-                    if (scenarioHasTag) {
-                        foundTagInFile = true;
-                    }
-                    scenarioHasTag = false;
+            if (line.startsWith("@")) {
+                if (line.toLowerCase().contains("@smoketest") || line.toLowerCase().contains("@regressiontest")) {
+                    scenarioHasTag = true;
                 }
-            }
-
-            // Verificar el último escenario
-            if (scenarioHasTag) {
-                foundTagInFile = true;
-            }
-
-            if (!foundTagInFile) {
-                NewIssue newIssue = context.newIssue().forRule(ruleKey);
-                NewIssueLocation location = context.newIssueLocation()
-                        .on(featureFile)
-                        .at(featureFile.selectLine(1))
-                        .message("El archivo debe contener al menos un Scenario o Scenario Outline con tag @smokeTest o @regressionTest correctamente escritos.");
-                newIssue.at(location).save();
+            } else if (line.startsWith("Scenario") || line.startsWith("Scenario Outline")) {
+                if (scenarioHasTag) {
+                    foundTagInFile = true;
+                }
+                scenarioHasTag = false;
             }
         }
+
+        if (scenarioHasTag) {
+            foundTagInFile = true;
+        }
+
+        if (!foundTagInFile) {
+            NewIssue newIssue = context.newIssue().forRule(ruleKey);
+            NewIssueLocation location = context.newIssueLocation()
+                    .on(featureFile)
+                    .at(featureFile.selectLine(1))
+                    .message("El archivo debe contener al menos un Scenario o Scenario Outline con tag @smokeTest o @regressionTest correctamente escritos.");
+            newIssue.at(location).save();
+        }
     }
+}
 }
