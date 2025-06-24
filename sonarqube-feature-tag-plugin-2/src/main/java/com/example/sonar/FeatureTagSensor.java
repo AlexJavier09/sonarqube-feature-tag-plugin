@@ -32,7 +32,14 @@ public void execute(SensorContext context) {
     Iterable<InputFile> featureFiles = fileSystem.inputFiles(file -> file.filename().endsWith(".feature") && file.type() == Type.MAIN);
 
     for (InputFile featureFile : featureFiles) {
-        String content = featureFile.contents();
+        String content;
+        try {
+            content = featureFile.contents();
+        } catch (java.io.IOException e) {
+            // Si no se puede leer el archivo, saltar y continuar con el siguiente
+            continue;
+        }
+
         List<String> lines = java.util.Arrays.asList(content.split("\\r?\\n"));
 
         boolean foundTagInFile = false;
@@ -59,12 +66,12 @@ public void execute(SensorContext context) {
 
         if (!foundTagInFile) {
             NewIssue newIssue = context.newIssue().forRule(ruleKey);
-NewIssueLocation location = newIssue.newLocation()
-        .on(featureFile)
-        .at(featureFile.selectLine(1))
-        .message("El archivo debe contener al menos un Scenario o Scenario Outline con tag @smokeTest o @regressionTest correctamente escritos.");
-newIssue.at(location);
-newIssue.save();
+            NewIssueLocation location = newIssue.newLocation()
+                    .on(featureFile)
+                    .at(featureFile.selectLine(1))
+                    .message("El archivo debe contener al menos un Scenario o Scenario Outline con tag @smokeTest o @regressionTest correctamente escritos.");
+            newIssue.at(location);
+            newIssue.save();
         }
     }
 }
