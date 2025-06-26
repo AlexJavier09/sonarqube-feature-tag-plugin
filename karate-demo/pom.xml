@@ -26,8 +26,8 @@
     <sonar.host.url>https://n8n-restaurante-sonarqube.k6ptvf.easypanel.host</sonar.host.url>
     <sonar.sources>src/main/java,src/main/resources</sonar.sources>
     <sonar.tests>src/test/java,src/test/resources</sonar.tests>
-    <sonar.inclusions>/.java,/.feature</sonar.inclusions>
-    <sonar.test.inclusions>/Test.java,/.feature</sonar.test.inclusions>
+    <sonar.inclusions>**/*.java,**/*.feature</sonar.inclusions>
+    <sonar.test.inclusions>**/Test.java,**/*.feature</sonar.test.inclusions>
   </properties>
 
   <build>
@@ -50,4 +50,4 @@
       </plugin>
     </plugins>
   </build>
-</project> 
+</project>
