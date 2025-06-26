@@ -14,28 +14,32 @@
     <karate.version>1.3.1</karate.version>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+    <sonar.projectKey>sqp_74b96721dfae5be29c2b693f70f254896f9e819b</sonar.projectKey>
+    <sonar.host.url>https://n8n-restaurante-sonarqube.k6ptvf.easypanel.host</sonar.host.url>
+    <sonar.sources>src/main/java,src/main/resources</sonar.sources>
+    <sonar.tests>src/test/java,src/test/resources</sonar.tests>
+    <sonar.inclusions>/.java,/.feature</sonar.inclusions>
+    <sonar.test.inclusions>/Test.java,/.feature</sonar.test.inclusions>
   </properties>
-
-  <dependencies>
-    <dependency>
-      <groupId>com.intuit.karate</groupId>
-      <artifactId>karate-junit5</artifactId>
-      <version>${karate.version}</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
 
   <build>
     <plugins>
+      <!-- Compilador Java -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M7</version>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
         <configuration>
-          <includes>
-            <include>**/*Test.java</include>
-          </includes>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
         </configuration>
+      </plugin>
+
+      <!-- Plugin SonarQube Maven Scanner -->
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>3.9.1.2184</version>
       </plugin>
     </plugins>
   </build>
