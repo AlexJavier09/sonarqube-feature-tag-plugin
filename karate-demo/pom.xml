@@ -24,8 +24,8 @@
     <maven.compiler.target>11</maven.compiler.target>
     <sonar.projectKey>sqp_74b96721dfae5be29c2b693f70f254896f9e819b</sonar.projectKey>
     <sonar.host.url>https://n8n-restaurante-sonarqube.k6ptvf.easypanel.host</sonar.host.url>
-    <sonar.sources>src/main/java,src/main/resources</sonar.sources>
-    <sonar.tests>src/test/java,src/test/resources</sonar.tests>
+    <sonar.sources>src/test/java,src/test/resources</sonar.sources>
+    <sonar.tests></sonar.tests>
     <sonar.inclusions>**/*.java,**/*.feature</sonar.inclusions>
     <sonar.test.inclusions>**/Test.java,**/*.feature</sonar.test.inclusions>
   </properties>
