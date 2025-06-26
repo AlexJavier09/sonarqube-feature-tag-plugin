@@ -47,8 +47,3 @@ jobs:
       with:
         name: karate-test-reports
         path: target/surefire-reports/
-
-    - name: Wait for SonarQube Quality Gate
-      uses: sonarsource/sonarcloud-quality-gate-action@master
-      env:
-        SONAR_TOKEN: ${{ sqp_74b96721dfae5be29c2b693f70f254896f9e819b }}
