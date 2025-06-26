@@ -24,7 +24,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        key: ${{ runner.os }}-maven-${{ hashFiles('/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
 
@@ -33,11 +33,16 @@ jobs:
       run: mvn clean install -DskipTests
 
     - name: SonarQube Scan
+      working-directory: karate-demo
       env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: mvn sonar:sonar  -Dsonar.projectKey=chapterQA-Karate -Dsonar.host.url=https://n8n-restaurante-sonarqube.k6ptvf.easypanel.host -Dsonar.login=sqp_74b96721dfae5be29c2b693f70f254896f9e819b
+        SONAR_TOKEN: sqp_74b96721dfae5be29c2b693f70f254896f9e819b
+      run: mvn sonar:sonar \
+            -Dsonar.projectKey=chapterQA-Karate \
+            -Dsonar.host.url=https://n8n-restaurante-sonarqube.k6ptvf.easypanel.host \
+            -Dsonar.login=sqp_74b96721dfae5be29c2b693f70f254896f9e819b
 
     - name: Run Karate tests
+      working-directory: karate-demo
       run: mvn test
 
     - name: Upload Karate test reports
