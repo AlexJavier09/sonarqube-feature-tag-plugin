@@ -7,6 +7,14 @@
   <groupId>com.example</groupId>
   <artifactId>karate-demo</artifactId>
   <version>1.0.0</version>
+  <dependencies>
+    <dependency>
+      <groupId>com.intuit.karate</groupId>
+      <artifactId>karate-junit5</artifactId>
+      <version>1.3.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
   <packaging>jar</packaging>
 
   <properties>
@@ -24,17 +32,16 @@
 
   <build>
     <plugins>
-      <!-- Compilador Java -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M7</version>
         <configuration>
-          <source>${maven.compiler.source}</source>
-          <target>${maven.compiler.target}</target>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
         </configuration>
       </plugin>
-
       <!-- Plugin SonarQube Maven Scanner -->
       <plugin>
         <groupId>org.sonarsource.scanner.maven</groupId>
