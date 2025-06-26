@@ -3,7 +3,7 @@ name: Build SonarQube Plugin
 on:
   push:
     branches:
-      - 
+      - main
   pull_request:
 
 jobs:
@@ -28,4 +28,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: sonarqube-feature-tag-plugin
-        path: target/sonarqube-feature-tag-plugin-1.0.0.jar
+        path: sonarqube-feature-tag-plugin-2/target/sonarqube-feature-tag-plugin-1.0.0.jar
