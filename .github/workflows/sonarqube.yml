@@ -36,7 +36,7 @@ jobs:
       working-directory: karate-demo
       env:
         SONAR_TOKEN: sqp_74b96721dfae5be29c2b693f70f254896f9e819b
-      run: mvn sonar:sonar -Dsonar.projectKey=chapterQA-Karate -Dsonar.host.url=https://n8n-restaurante-sonarqube.k6ptvf.easypanel.host -Dsonar.login=sqp_74b96721dfae5be29c2b693f70f254896f9e819b
+      run: mvn sonar:sonar -Dsonar.projectKey=chapterQA-Karate -Dsonar.host.url=https://chapter-karate-sonarqube.host -Dsonar.login=sqp_74b96721dfae5be29c2b693f70f254896f9e819b
 
     - name: Run Karate tests
       working-directory: karate-demo
